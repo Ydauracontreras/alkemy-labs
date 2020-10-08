@@ -9,10 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public class GenericService<T> implements IService<T> {
 
     @Autowired
-    JpaRepository<T, Integer> repository;
+    protected JpaRepository<T, Integer> repository;
 
     @Override
-    public Boolean create(T entity) {
+    public boolean create(T entity) {
         repository.save(entity);
         return true;
     }
@@ -35,7 +35,7 @@ public class GenericService<T> implements IService<T> {
     }
 
     @Override
-    public Boolean delete(T entity) {
+    public boolean delete(T entity) {
         repository.delete(entity);
         return true;
     }

@@ -13,6 +13,7 @@ public class Teacher extends Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_id")
     private Integer teacherId;
+    @Column(name = "status_id")
     private Integer status;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)

@@ -3,7 +3,7 @@ package ar.com.api.alkemy.labs.services.base;
 import java.util.List;
 
 public interface IService<T> {
-    Boolean create(T entity);
+    boolean create(T entity);
 
     T update(T entity);
 
@@ -11,6 +11,6 @@ public interface IService<T> {
 
     T findById(Integer id);
 
-    Boolean delete(T entity);
+    boolean delete(T entity);
 
 }

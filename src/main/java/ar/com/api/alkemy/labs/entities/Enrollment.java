@@ -10,7 +10,7 @@ public class Enrollment {
     @Column(name = "enrollment_id")
     private Integer enrollment_id;
     @ManyToOne
-    @JoinColumn(name = "subject_id", referencedColumnName = "subject")
+    @JoinColumn(name = "subject_id", referencedColumnName = "subject_id")
     private Subject subject;
 
     @ManyToOne
