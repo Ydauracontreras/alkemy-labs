@@ -30,4 +30,13 @@ public class ManagerService extends GenericService<Manager> {
     public boolean existManager(Integer dni) {
         return (this.repo().findByDni(dni) != null);
     }
+
+    public Manager updateManagers(Manager manager, String name, String lastName, Integer dni) {
+        manager.setName(name);
+        manager.setLastName(lastName);
+        manager.setDni(dni);
+        manager.setFile("M" + manager.getDni() + manager.getName().charAt(0) + manager.getLastName().charAt(0));
+        update(manager);
+        return manager;
+    }
 }

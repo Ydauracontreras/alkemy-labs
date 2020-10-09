@@ -16,7 +16,7 @@ public class ManagerController {
     @Autowired
     ManagerService managerService;
 
-    @PostMapping("/Managers")
+    @PostMapping("/managers")
     @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
     public ResponseEntity<?> registerManagers(@RequestBody ManagerRequest managerR) {
         GenericResponse gr = new GenericResponse();
@@ -33,13 +33,13 @@ public class ManagerController {
         }
     }
 
-    @GetMapping("/Managers")
+    @GetMapping("/managers")
     @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
     public ResponseEntity<?> listManagers() {
         return ResponseEntity.ok(managerService.findAll());
     }
 
-    @GetMapping("/Managers/{id}")
+    @GetMapping("/managers/{id}")
     @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
     public ResponseEntity<?> findManager(@PathVariable Integer id) {
         Manager manager = managerService.findById(id);
@@ -47,5 +47,23 @@ public class ManagerController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(manager);
+    }
+
+    @PutMapping("/managers/{id}")
+    @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
+    public ResponseEntity<?> updateManagers(@PathVariable Integer id, @RequestBody ManagerRequest managerR) {
+        GenericResponse gr = new GenericResponse();
+        Manager manager = managerService.updateManagers(managerService.findById(id), managerR.name, managerR.lastName,
+                managerR.dni);
+        if (manager != null) {
+            gr.isOk = true;
+            gr.id = manager.getManagerId();
+            gr.message = "Manager successfully update";
+            return ResponseEntity.ok().body(gr);
+        } else {
+            gr.isOk = false;
+            gr.message = "Manager did not update";
+            return ResponseEntity.badRequest().body(gr);
+        }
     }
 }

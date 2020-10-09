@@ -24,6 +24,7 @@ public class Subject {
     private Teacher teacher;
 
     @ManyToMany(mappedBy = "enrolledSubjects")
+
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
@@ -98,6 +99,7 @@ public class Subject {
      */
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+        teacher.getSubjectsTeach().add(this);
     }
 
     /**

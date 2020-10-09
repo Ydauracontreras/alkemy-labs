@@ -1,8 +1,13 @@
 package ar.com.api.alkemy.labs.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ar.com.api.alkemy.labs.entities.Enrollment;
 import ar.com.api.alkemy.labs.entities.Student;
+import ar.com.api.alkemy.labs.entities.Subject;
 import ar.com.api.alkemy.labs.repositories.StudentRepository;
 import ar.com.api.alkemy.labs.services.base.GenericService;
 
@@ -30,22 +35,47 @@ public class StudentService extends GenericService<Student> {
         }
     }
 
+    public Student updateStudent(Student student, String name, String lastName, Integer dni) {
+        student.setName(name);
+        student.setLastName(lastName);
+        student.setDni(dni);
+        student.setFile("s" + dni + name.charAt(0) + lastName.charAt(0));
+        update(student);
+        return student;
+
+    }
+
     public boolean existStudent(Integer dni) {
         return (this.repo().findByDni(dni) != null);
     }
 
-    /*
-     * public Student enrollStudent(Integer id, Integer subjectId) {
-     * 
-     * Subject subject = subjectService.findById(subjectId); Enrollment enrollment =
-     * new Enrollment(); this.findById(id).getEnrolledSubjects().stream().forEach(s
-     * -> { Student s = findById(id); (s.getSubjectId().equals(subjectId) ||
-     * subject.getEnrollments().size() >= subject.getMaxQuota()).map(
-     * subject.AddStudent(s); enrollment.setStudent(s);
-     * enrollment.setSubject(subject); subjectService.update(subject); update(s);
-     * return s; )}
-     * 
-     * ); }
-     */
+    public boolean findSubject(Student student, Subject subject) {
+        Optional<Subject> o = student.getEnrolledSubjects().stream()
+                .filter(sb -> sb.getName().equals(subject.getName())).findAny();
+        return (o.isPresent() ? true : false);
+    }
+
+    public boolean findTimeFree(Student student, Subject subject) {
+        Optional<Subject> o = student.getEnrolledSubjects().stream()
+                .filter(sb -> sb.getSchedule().equals(subject.getSchedule())).findAny();
+        return (!o.isPresent() ? true : false);
+    }
+
+    public Student enrollStudent(Integer id, Integer subjectId) {
+        Student student = this.findById(id);
+        Subject subject = subjectService.findById(subjectId);
+        Enrollment enrollment = new Enrollment();
+        if (this.findTimeFree(student, subject) && subjectService.isFull(subject) > 0) {
+            subject.AddStudent(student);
+            enrollment.setStudent(student);
+            enrollment.setSubject(subject);
+            subjectService.update(subject);
+            update(student);
+            return student;
+        }
+
+        return null;
+
+    }
 
 }

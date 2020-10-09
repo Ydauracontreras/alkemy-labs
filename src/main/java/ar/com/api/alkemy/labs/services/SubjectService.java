@@ -1,5 +1,7 @@
 package ar.com.api.alkemy.labs.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,14 @@ public class SubjectService extends GenericService<Subject> {
         }
     }
 
+    public Subject updateSubjects(Subject subject, String name, String schedule, Integer maxQuota) {
+        subject.setName(name);
+        subject.setSchedule(schedule);
+        subject.setMaxQuota(maxQuota);
+        update(subject);
+        return subject;
+    }
+
     public boolean existSubject(String name) {
         return (this.repo().findByName(name) != null);
     }
@@ -50,6 +60,10 @@ public class SubjectService extends GenericService<Subject> {
             return subject;
         }
         return null;
+    }
+
+    public List<Subject> listAllSubject() {
+        return this.repo().findByOrderByNameAsc();
     }
 
 }

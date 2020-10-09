@@ -18,9 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import ar.com.api.alkemy.labs.services.JWTUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 
-/**
- * Este es un filtro que se ejectue en cada request UNA sola ves(OncePerRequest)
- */
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
@@ -41,8 +38,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
         String jwtToken = null;
 
-        // JWT Token viene de la forma "Bearer token". Remover el texto Bearer y obtener
-        // solo el Token
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 
             jwtToken = requestTokenHeader.substring(7);

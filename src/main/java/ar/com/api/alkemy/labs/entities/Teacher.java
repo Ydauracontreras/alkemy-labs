@@ -18,7 +18,6 @@ public class Teacher extends Person {
     private Integer teacherId;
     @Column(name = "status_id")
     private Integer status;
-    @JsonIgnore
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     List<Subject> subjectsTeach = new ArrayList<>();
@@ -86,11 +85,6 @@ public class Teacher extends Person {
      */
     public void setSubjectsTeach(List<Subject> subjectsTeach) {
         this.subjectsTeach = subjectsTeach;
-    }
-
-    public void AddSubject(Subject subject) {
-        this.subjectsTeach.add(subject);
-        subject.setTeacher(this);
     }
 
 }

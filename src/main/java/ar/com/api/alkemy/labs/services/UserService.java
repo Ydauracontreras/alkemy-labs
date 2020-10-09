@@ -37,41 +37,48 @@ public class UserService extends GenericService<User> {
         User user = new User();
         user.setTipoUsuarioId(userType);
         user.setUsername(dni.toString());
-        switch (userType) {
-            case STUDENT:
-                Student student = new Student();
-                student.setName(name);
-                student.setLastName(lastName);
-                student.setDni(dni);
-                student.setFile("s" + dni + name.charAt(0) + lastName.charAt(0));
-                user.setPassword(Crypto.encrypt(student.getFile(), user.getUsername()));
-                student.setUser(user);
-                studentService.create(student);
+        if (!existUser(user.getUsername())) {
+            switch (userType) {
+                case STUDENT:
+                    Student student = new Student();
+                    student.setName(name);
+                    student.setLastName(lastName);
+                    student.setDni(dni);
+                    student.setFile("s" + dni + name.charAt(0) + lastName.charAt(0));
+                    user.setPassword(Crypto.encrypt(student.getFile(), user.getUsername()));
+                    student.setUser(user);
+                    studentService.create(student);
 
-                student.setUser(user);
-                break;
-            case MANAGER:
-                Manager manager = new Manager();
-                manager.setName(name);
-                manager.setLastName(lastName);
-                manager.setDni(dni);
-                manager.setFile("M" + dni + name.charAt(0) + lastName.charAt(0));
-                user.setPassword(Crypto.encrypt(manager.getFile(), user.getUsername()));
-                manager.setUser(user);
-                managerService.create(manager);
-                break;
+                    student.setUser(user);
+                    break;
+                case MANAGER:
+                    Manager manager = new Manager();
+                    manager.setName(name);
+                    manager.setLastName(lastName);
+                    manager.setDni(dni);
+                    manager.setFile("M" + dni + name.charAt(0) + lastName.charAt(0));
+                    user.setPassword(Crypto.encrypt(manager.getFile(), dni.toString()));
+                    manager.setUser(user);
+                    managerService.create(manager);
+                    break;
 
-            default:
-                create(user);
-                break;
+                default:
+
+                    break;
+            }
+
+            return user;
+        } else {
+            return null;
         }
-
-        return user;
-
     }
 
     public User findByUsername(String username) {
         return this.repo().findByUsername(username);
+    }
+
+    public boolean existUser(String username) {
+        return (this.repo().findByUsername(username) != null);
     }
 
     public User login(String username, String password) {

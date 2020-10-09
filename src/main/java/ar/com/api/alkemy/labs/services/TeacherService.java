@@ -28,6 +28,15 @@ public class TeacherService extends GenericService<Teacher> {
         }
     }
 
+    public Teacher updateTeachers(Teacher teacher, String name, String lastName, Integer dni) {
+        teacher.setName(name);
+        teacher.setLastName(lastName);
+        teacher.setDni(dni);
+        teacher.setStatus(TeacherStatusEnum.ACTIVE);
+        update(teacher);
+        return teacher;
+    }
+
     public boolean existTeacher(Integer dni) {
         return (this.repo().findByDni(dni) != null);
     }

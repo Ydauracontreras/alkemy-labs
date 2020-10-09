@@ -1,5 +1,7 @@
 package ar.com.api.alkemy.labs.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.api.alkemy.labs.entities.Subject;
 import ar.com.api.alkemy.labs.entities.Teacher;
 import ar.com.api.alkemy.labs.entities.Teacher.TeacherStatusEnum;
 import ar.com.api.alkemy.labs.models.requests.*;
@@ -66,6 +69,31 @@ public class TeacherController {
         gr.id = teacher.getTeacherId();
         gr.message = "Teacher " + teacher.getName() + " " + teacher.getLastName() + "successfully deleted";
         return ResponseEntity.ok().body(gr);
+    }
+
+    @PutMapping("/teachers/{id}")
+    @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
+    public ResponseEntity<?> updateTeachers(@PathVariable Integer id, @RequestBody TeacherRequest teacherR) {
+        GenericResponse gr = new GenericResponse();
+        Teacher teacher = teacherService.updateTeachers(teacherService.findById(id), teacherR.name, teacherR.lastName,
+                teacherR.dni);
+        if (teacher != null) {
+            gr.isOk = true;
+            gr.id = teacher.getTeacherId();
+            gr.message = "Teacher successfully updated";
+            return ResponseEntity.ok().body(gr);
+        } else {
+            gr.isOk = false;
+            gr.message = "Teacher did not updated";
+            return ResponseEntity.badRequest().body(gr);
+        }
+
+    }
+
+    @GetMapping("/teacher/{id}/subjects")
+    public ResponseEntity<?> listSubjectsByTeacher(@PathVariable Integer id) {
+        List<Subject> subjects = teacherService.findById(id).getSubjectsTeach();
+        return ResponseEntity.ok(subjects);
     }
 
 }

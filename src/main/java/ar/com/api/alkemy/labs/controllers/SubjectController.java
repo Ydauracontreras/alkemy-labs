@@ -35,7 +35,7 @@ public class SubjectController {
 
     @GetMapping("/subjects")
     public ResponseEntity<?> listSubjects() {
-        return ResponseEntity.ok(subjectService.findAll());
+        return ResponseEntity.ok(subjectService.listAllSubject());
     }
 
     @GetMapping("/subjects/{id}")
@@ -55,8 +55,8 @@ public class SubjectController {
         if (subject != null) {
             gr.isOk = true;
             gr.id = subject.getSubjectId();
-            gr.message = "Teacher " + subject.getTeacher().getName() + subject.getTeacher().getLastName()
-                    + "successfully registered";
+            gr.message = "Teacher  " + subject.getTeacher().getName() + " " + subject.getTeacher().getLastName()
+                    + " successfully registered";
             return ResponseEntity.ok().body(gr);
         } else
             return ResponseEntity.badRequest().build();
@@ -75,6 +75,24 @@ public class SubjectController {
         gr.id = subject.getSubjectId();
         gr.message = "Subject successfully deleted";
         return ResponseEntity.ok().body(gr);
+    }
+
+    @PutMapping("/subjects/{id}")
+    @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
+    public ResponseEntity<?> updateSubjects(@PathVariable Integer id, @RequestBody SubjectRequest subjectR) {
+        GenericResponse gr = new GenericResponse();
+        Subject subject = subjectService.updateSubjects(subjectService.findById(id), subjectR.name, subjectR.schedule,
+                subjectR.maxQuota);
+        if (subject != null) {
+            gr.isOk = true;
+            gr.id = subject.getSubjectId();
+            gr.message = "Subject successfully Update";
+            return ResponseEntity.ok().body(gr);
+        } else {
+            gr.isOk = false;
+            gr.message = "subject did not Update";
+            return ResponseEntity.badRequest().body(gr);
+        }
     }
 
 }
