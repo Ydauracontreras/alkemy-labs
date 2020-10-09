@@ -3,6 +3,9 @@ package ar.com.api.alkemy.labs.entities;
 import java.util.*;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -15,7 +18,7 @@ public class Teacher extends Person {
     private Integer teacherId;
     @Column(name = "status_id")
     private Integer status;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     List<Subject> subjectsTeach = new ArrayList<>();

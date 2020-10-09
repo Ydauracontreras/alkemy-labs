@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "managers")
 @Entity
-public class Manager {
+public class Manager extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "manager_id")
@@ -58,6 +58,7 @@ public class Manager {
      */
     public void setUser(User user) {
         this.user = user;
+        user.setManager(this);
     }
 
 }

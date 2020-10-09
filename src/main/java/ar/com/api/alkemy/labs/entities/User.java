@@ -9,7 +9,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer userId;
-
+    private String username;
+    private String password;
     private Integer typeUserId;
     @OneToOne
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
@@ -17,20 +18,6 @@ public class User {
     @OneToOne
     @JoinColumn(name = "manager_id", referencedColumnName = "manager_id")
     private Manager manager;
-
-    /**
-     * @return the tipoUsuarioId
-     */
-    public TypeUserEnum getTypeUserId() {
-        return TypeUserEnum.parse(this.typeUserId);
-    }
-
-    /**
-     * @param tipoUsuarioId the tipoUsuarioId to set
-     */
-    public void setTipoUsuarioId(TypeUserEnum typeUserId) {
-        this.typeUserId = typeUserId.getValue();
-    }
 
     /**
      * @return the userId
@@ -75,7 +62,7 @@ public class User {
     }
 
     public enum TypeUserEnum {
-        MANAGER(1), STUDENT(2);
+        MANAGER(0), STUDENT(1);
 
         private final Integer value;
 
@@ -113,4 +100,50 @@ public class User {
         }
         return null;
     }
+
+    /**
+     * @return the tipoUsuarioId
+     */
+    public TypeUserEnum getTypeUserId() {
+        return TypeUserEnum.parse(this.typeUserId);
+    }
+
+    /**
+     * @param tipoUsuarioId the tipoUsuarioId to set
+     */
+    public void setTipoUsuarioId(TypeUserEnum typeUserId) {
+        this.typeUserId = typeUserId.getValue();
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setTipoUsuarioId(Integer value) {
+    }
+
 }

@@ -69,6 +69,7 @@ public class Student extends Person {
      */
     public void setUser(User user) {
         this.user = user;
+        user.setStudent(this);
     }
 
     /**
