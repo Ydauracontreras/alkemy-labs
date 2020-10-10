@@ -1,0 +1,31 @@
+.home-container {
+  background-color: rgb(211, 205, 205);
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.MuiButton-outlinedPrimary {
+  color: rgb(53, 50, 50) !important;
+  border: 2px solid rgb(53, 50, 50) !important;
+  margin: 150px !important;
+  padding: 0.7rem !important;
+}
+
+.MuiButton-outlinedPrimary {
+  width: 150px !important;
+}
+
+.home-container {
+  font-size: 3rem;
+  font-weight: 800;
+}

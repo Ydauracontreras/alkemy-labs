@@ -58,7 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
                 .authorizeRequests().antMatchers("/auth/*").permitAll().and().authorizeRequests().
 
-                anyRequest().authenticated().and().exceptionHandling()
+                anyRequest().authenticated()
+                .and()
+
+                .authorizeRequests().antMatchers("/*").permitAll().and().authorizeRequests().
+
+                anyRequest().authenticated()
+                
+                .and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

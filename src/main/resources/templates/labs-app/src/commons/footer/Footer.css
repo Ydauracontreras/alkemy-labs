@@ -1,0 +1,22 @@
+.MuiAppBar-colorPrimary {
+  color: rgb(0, 0, 0) !important;
+  background-color: rgb(73, 175, 189) !important;
+  height: 10vh !important;
+}
+
+.footer-container header {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.MuiSvgIcon-root {
+  fill: #000000 !important;
+  width: 1.5em !important;
+  height: 2em !important;
+}
+
+h6.MuiTypography-root.makeStyles-title-3.MuiTypography-h6.MuiTypography-noWrap {
+  color: rgb(53, 53, 59) !important;
+  font-size: 1.5rem;
+  font-weight: 800;
+}

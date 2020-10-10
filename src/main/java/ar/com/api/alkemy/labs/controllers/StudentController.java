@@ -63,7 +63,7 @@ public class StudentController {
 
     @GetMapping("students/{id}")
     @PreAuthorize("hasAuthority('CLAIM_userType_MANAGER')")
-    public ResponseEntity<?> findTeacher(@PathVariable Integer id) {
+    public ResponseEntity<?> findStudent(@PathVariable Integer id) {
         Student student = studentService.findById(id);
         if (student == null) {
             return ResponseEntity.notFound().build();

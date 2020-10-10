@@ -1,0 +1,40 @@
+.register-container {
+  background-color: rgb(211, 205, 205);
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-container img {
+  width: 35%;
+}
+
+input[type="radio"] {
+  width: 20px;
+  height: 20px;
+}
+
+.radio-button {
+  margin: 0.5rem;
+}
+label {
+  font-weight: 600;
+  font-size: 1em;
+  padding: 0.2rem;
+}
+.form-group input {
+  height: 20px;
+  padding: 0.5rem !important;
+  margin: 0.5rem !important;
+  border-radius: 4px !important;
+  border: 2px solid rgb(53, 50, 50);
+}
+
+.MuiButton-outlinedPrimary {
+  color: rgb(53, 50, 50) !important;
+  border: 2px solid rgb(53, 50, 50) !important;
+  margin: 20px !important;
+  padding: 0.4rem !important;
+}
