@@ -1,7 +1,7 @@
 
 # ALKEMY LABS APP
 
-Web application where university students can register for the subjects they want to take
+Aplicación web donde los estudiantes universitarios pueden inscribirse en las materias que quieran cursar
 
 
 ## Common setup
