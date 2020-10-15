@@ -46,9 +46,9 @@ public class SubjectService extends GenericService<Subject> {
     }
 
     public Integer isFull(Subject subject) {
-        if (subject.getEnrollments().size() >= subject.getMaxQuota())
-            return 0;
-        return subject.getMaxQuota() - subject.getEnrollments().size();
+        if (subject.getMaxQuota() > subject.getEnrollments().size())
+            return subject.getMaxQuota() - subject.getEnrollments().size();
+        return 0;
     }
 
     public Subject addTeacher(Integer subjectId, Integer teacherId) {

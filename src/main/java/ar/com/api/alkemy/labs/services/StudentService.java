@@ -67,9 +67,12 @@ public class StudentService extends GenericService<Student> {
         Enrollment enrollment = new Enrollment();
         if (this.findTimeFree(student, subject) && subjectService.isFull(subject) > 0) {
             subject.AddStudent(student);
+
             enrollment.setStudent(student);
             enrollment.setSubject(subject);
-            subjectService.update(subject);
+
+            subject.AddEnrollment(enrollment);
+
             update(student);
             return student;
         }

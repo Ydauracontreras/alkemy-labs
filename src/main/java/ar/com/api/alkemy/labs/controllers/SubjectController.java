@@ -1,5 +1,8 @@
 package ar.com.api.alkemy.labs.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +14,7 @@ import ar.com.api.alkemy.labs.models.responses.*;
 import ar.com.api.alkemy.labs.services.SubjectService;
 
 @RestController
+@CrossOrigin("*")
 public class SubjectController {
 
     @Autowired
@@ -35,7 +39,17 @@ public class SubjectController {
 
     @GetMapping("/subjects")
     public ResponseEntity<?> listSubjects() {
-        return ResponseEntity.ok(subjectService.listAllSubject());
+        List<SubjectResponse> subjects = subjectService.listAllSubject().stream().map(s -> {
+            SubjectResponse sResponse = new SubjectResponse();
+            sResponse.id = s.getSubjectId();
+            sResponse.name = s.getName();
+            sResponse.schedule = s.getSchedule();
+            sResponse.maxQuota = s.getMaxQuota();
+            sResponse.freeSpots = subjectService.isFull(s);
+            return sResponse;
+
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(subjects);
     }
 
     @GetMapping("/subjects/{id}")

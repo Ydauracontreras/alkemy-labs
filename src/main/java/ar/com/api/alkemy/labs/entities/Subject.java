@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -21,10 +23,11 @@ public class Subject {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id")
+    @JsonIgnore
     private Teacher teacher;
 
     @ManyToMany(mappedBy = "enrolledSubjects")
-
+    @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
@@ -114,6 +117,7 @@ public class Subject {
      */
     public void setStudents(List<Student> students) {
         this.students = students;
+
     }
 
     public void AddStudent(Student student) {

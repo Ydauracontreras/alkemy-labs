@@ -56,17 +56,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
         httpSecurity.csrf().disable().cors().and()
 
-                .authorizeRequests().antMatchers("/auth/*").permitAll().and().authorizeRequests().
+                .authorizeRequests().antMatchers("/auth/*").permitAll().and().authorizeRequests().antMatchers("/*")
+                .permitAll().anyRequest().authenticated()
 
-                anyRequest().authenticated()
-                .and()
-
-                .authorizeRequests().antMatchers("/*").permitAll().and().authorizeRequests().
-
-                anyRequest().authenticated()
-                
-                .and().exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .sessionManagement()
 
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
